@@ -43,7 +43,7 @@ public class Auction
             System.out.println(lot.toString());
         }
     }
-    
+
     /**
      * Make a bid for a lot.
      * A message is printed indicating whether the bid is
@@ -55,20 +55,17 @@ public class Auction
      */
     public void makeABid(int lotNumber, Person bidder, long value)
     {
-        Lot selectedLot = getLot(lotNumber);
-        if(selectedLot != null) {
-            Bid bid = new Bid(bidder, value);
-            boolean successful = selectedLot.bidFor(bid);
+        if(getLot(lotNumber) != null) {
+            boolean successful = getLot(lotNumber).bidFor(new Bid(bidder, value));
             if(successful) {
                 System.out.println("The bid for lot number " +
-                                   lotNumber + " was successful.");
+                    lotNumber + " was successful.");
             }
             else {
                 // Report which bid is higher.
-                Bid highestBid = selectedLot.getHighestBid();
                 System.out.println("Lot number: " + lotNumber +
-                                   " already has a bid of: " +
-                                   highestBid.getValue());
+                    " already has a bid of: " +
+                    getLot(lotNumber).getHighestBid().getValue());
             }
         }
     }
@@ -87,9 +84,9 @@ public class Auction
             // right lot.
             if(selectedLot.getNumber() != lotNumber) {
                 System.out.println("Internal error: Lot number " +
-                                   selectedLot.getNumber() +
-                                   " was returned instead of " +
-                                   lotNumber);
+                    selectedLot.getNumber() +
+                    " was returned instead of " +
+                    lotNumber);
                 // Don't return an invalid lot.
                 selectedLot = null;
             }
@@ -97,8 +94,25 @@ public class Auction
         }
         else {
             System.out.println("Lot number: " + lotNumber +
-                               " does not exist.");
+                " does not exist.");
             return null;
+        }
+    }
+
+    /**
+     * Metodo que mostrara por pantalla los detalles de todos los items que se estan subastando actualmente
+     */
+    public void close(){
+        int index = 0;
+        while(index < lots.size()){
+            if(lots.get(index).getHighestBid() != null){
+                System.out.println("Lote numero: " + lots.get(index).getNumber() + "   Descripcion: " + lots.get(index).getDescription() + 
+                    "   Valor de la puja: " + lots.get(index).getHighestBid().getValue() + "   Pujador: " + lots.get(index).getHighestBid().getBidder().getName());
+            }
+            else{
+                System.out.println("Lote numero: " + lots.get(index).getNumber() + "   Descripcion: " + lots.get(index).getDescription() + "   Sin pujas");
+            }
+            index ++;
         }
     }
 }
