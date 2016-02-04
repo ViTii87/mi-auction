@@ -136,4 +136,13 @@ public class Auction
         } 
         return notSold;
     }
+    
+    /**
+     * Metodo que eliminara un objeto de la subasta
+     */
+    public Lot removeLot(int number){
+        Lot lot = getLot(number);
+        
+        return lot;
+    }
 }
