@@ -115,4 +115,19 @@ public class Auction
             index ++;
         }
     }
+    
+    /**
+     * Metodo que devuelve todos los items que no tienen una puja
+     */
+    public ArrayList<Lot> getUnsold(){
+        ArrayList<Lot> notSold = new ArrayList<Lot>();
+        int index = 0;
+        while(index < lots.size()){
+            if(lots.get(index).getHighestBid() == null){
+                notSold.add(lots.get(index));
+            }
+            index ++;
+        } 
+        return notSold;
+    }
 }
