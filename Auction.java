@@ -142,7 +142,9 @@ public class Auction
      */
     public Lot removeLot(int number){
         Lot lot = getLot(number);
-        
+        if(lot != null) {
+            lots.remove(lot);
+        }
         return lot;
     }
 }
