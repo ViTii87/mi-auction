@@ -77,32 +77,22 @@ public class Auction
      */
     public Lot getLot(int lotNumber)
     {
-        if((lotNumber >= 1) && (lotNumber < nextLotNumber)) {
-            // The number seems to be reasonable.
-            Lot selectedLot = null;
-            if(lotNumber > 1){
-                selectedLot = lots.get(lotNumber - (lots.size() - 1));
-            }
-            else{
-                selectedLot = lots.get(lotNumber - 1);
-            }
-            // Include a confidence check to be sure we have the
-            // right lot.
-            if(selectedLot.getNumber() != lotNumber) {
-                System.out.println("Internal error: Lot number " +
-                    selectedLot.getNumber() +
-                    " was returned instead of " +
-                    lotNumber);
-                // Don't return an invalid lot.
-                selectedLot = null;
-            }
-            return selectedLot;
+        Lot selectedLot = null;
+        boolean encontrado = false;
+        int index = 0;
+        while(index < lots.size() && !encontrado) {          
+            if(lots.get(index).getNumber() == lotNumber) {
+                selectedLot = lots.get(index);
+                encontrado = true;
+            } 
+            index ++;
         }
-        else {
+        if(!encontrado) {
             System.out.println("Lot number: " + lotNumber +
                 " does not exist.");
-            return null;
+            selectedLot = null;
         }
+        return selectedLot; 
     }
 
     /**
@@ -121,7 +111,7 @@ public class Auction
             index ++;
         }
     }
-    
+
     /**
      * Metodo que devuelve todos los items que no tienen una puja
      */
@@ -136,7 +126,7 @@ public class Auction
         } 
         return notSold;
     }
-    
+
     /**
      * Metodo que eliminara un objeto de la subasta
      */
